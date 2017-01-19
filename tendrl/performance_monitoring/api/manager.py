@@ -1,6 +1,5 @@
 import ast
 import etcd
-from flask.ext.api import status
 from flask import Flask
 from flask import request
 import logging
@@ -14,6 +13,7 @@ LOG = logging.getLogger(__name__)
 persister = None
 time_series_db_manager = None
 app = Flask(__name__)
+HTTP_500_INTERNAL_SERVER_ERROR = 1
 
 
 @app.route("/monitoring/nodes/<node_id>/<resource_name>/stats")
@@ -35,7 +35,7 @@ def get_stats(node_id, resource_name):
         etcd.EtcdException,
         TypeError
     ) as ex:
-        return str(ex), status.HTTP_500_INTERNAL_SERVER_ERROR
+        return str(ex), HTTP_500_INTERNAL_SERVER_ERROR
 
 
 @app.route("/monitoring/nodes/<node_id>/monitored_types")
@@ -55,7 +55,7 @@ def get_stat_types(node_id):
         etcd.EtcdException,
         TypeError
     ) as ex:
-        return str(ex), status.HTTP_500_INTERNAL_SERVER_ERROR
+        return str(ex), HTTP_500_INTERNAL_SERVER_ERROR
 
 
 @app.route("/monitoring/nodes/summary")
@@ -82,7 +82,7 @@ def get_node_summary():
         etcd.EtcdException,
         TypeError
     ) as ex:
-        return str(ex), status.HTTP_500_INTERNAL_SERVER_ERROR
+        return str(ex), HTTP_500_INTERNAL_SERVER_ERROR
 
 
 class APIManager(Process):
