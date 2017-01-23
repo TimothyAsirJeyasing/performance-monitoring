@@ -13,7 +13,7 @@ LOG = logging.getLogger(__name__)
 persister = None
 time_series_db_manager = None
 app = Flask(__name__)
-HTTP_500_INTERNAL_SERVER_ERROR = 1
+HTTP_500_INTERNAL_SERVER_ERROR = 500
 
 
 @app.route("/monitoring/nodes/<node_id>/<resource_name>/stats")
